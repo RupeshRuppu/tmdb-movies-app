@@ -39,6 +39,7 @@ const getMovieCastDetails = async (movieid: number) => {
   try {
     let response = await fetch(movieCastDetails(movieid));
     let json = await response.json();
+
     return json;
   } catch (error) {
     console.error(

@@ -53,15 +53,18 @@ const getPopulrMoviesList = async () => {
   }
 };
 
-const HomeScreen = ({navigation}: any) => {
+const HomeScreen = ({navigation, route}: any) => {
   const [nowPlayingMoviesList, setNowPlayingMoviesList] =
     useState<any>(undefined);
   const [popularMoviesList, setPopularMovieList] = useState<any>(undefined);
   const [upcomingMoviesList, setUpComingMoviesList] = useState<any>(undefined);
 
   const searchMoviesFunction = () => {
-    navigation.navigate('Search');
+    if (route.name === 'Home') {
+      navigation.navigate('Search');
+    }
   };
+
 
   useEffect(() => {
     (async () => {
@@ -90,7 +93,7 @@ const HomeScreen = ({navigation}: any) => {
         <StatusBar hidden />
 
         <View style={styles.InputHeaderContainer}>
-          <InputHeader searchFunction={searchMoviesFunction} />
+          <InputHeader onFocus={searchMoviesFunction} autoFocus={false} />
         </View>
 
         <View style={styles.loadingContainer}>
@@ -105,7 +108,7 @@ const HomeScreen = ({navigation}: any) => {
       <StatusBar hidden />
 
       <View style={styles.InputHeaderContainer}>
-        <InputHeader searchFunction={searchMoviesFunction} />
+        <InputHeader searchFunction={() => {}} onFocus={searchMoviesFunction} />
       </View>
 
       <CategoryHeader title={'Now Playing'} />

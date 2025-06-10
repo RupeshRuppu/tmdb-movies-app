@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {
   Text,
   View,
@@ -14,18 +14,25 @@ import {
   SPACING,
 } from '../theme/theme';
 import CustomIcon from './CustomIcon';
+import {debounce} from '../util/debounce';
 
 const InputHeader = (props: any) => {
   const [searchInput, SetSearchInput] = useState<string>('');
-
+  const debounceSearch = useMemo(() => debounce(props.searchFunction), []);
+  
   return (
     <View style={styles.inputBox}>
       <TextInput
         style={styles.textInput}
-        onChangeText={inputText => SetSearchInput(inputText)}
+        onChangeText={inputText => {
+          SetSearchInput(inputText);
+          debounceSearch(inputText);
+        }}
+        onFocus={props.onFocus}
         placeholder="Search Your Movies..."
         placeholderTextColor={COLORS.WhiteRGBA32}
         value={searchInput}
+        autoFocus={props.autoFocus}
       />
       <TouchableOpacity onPress={() => props.searchFunction(searchInput)}>
         <CustomIcon
@@ -42,7 +49,6 @@ export default InputHeader;
 
 const styles = StyleSheet.create({
   inputBox: {
-    //  backgroundColor: 'green',
     paddingHorizontal: SPACING.space_24,
     paddingVertical: SPACING.space_8,
     borderWidth: 2,

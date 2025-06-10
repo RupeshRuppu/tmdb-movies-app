@@ -26,6 +26,7 @@ const SeacrhScreen = ({navigation}: any) => {
       const resp = await fetch(searchMovies(name));
       const json = await resp.json();
       setSearchList(json.results);
+      
     } catch (error) {
       console.log('something went wroung in SearchMovies function');
     } finally {
@@ -37,7 +38,7 @@ const SeacrhScreen = ({navigation}: any) => {
     <View style={styles.container}>
       <StatusBar hidden />
       <View style={styles.InputHeaderContainer}>
-        <InputHeader searchFunction={searchMoviesFunction} />
+        <InputHeader searchFunction={searchMoviesFunction} autoFocus={true} />
       </View>
       {loading ? (
         <View style={styles.loadingContainer}>
@@ -58,7 +59,7 @@ const SeacrhScreen = ({navigation}: any) => {
               shouldMarginatedAtEnd={false}
               shouldMarginatedAround={true}
               cardFunction={() => {
-                navigation.navigate('MovieDetails', {movie: item.id});
+                navigation.push('MovieDetails', {movieid: item.id});
               }}
               title={item.original_title}
               cardWidth={width / 2 - SPACING.space_12 * 2}
