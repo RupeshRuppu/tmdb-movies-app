@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useContext} from 'react';
 import {
   Text,
   View,
@@ -15,17 +15,18 @@ import {
 } from '../theme/theme';
 import CustomIcon from './CustomIcon';
 import {debounce} from '../util/debounce';
+import {useSearchContext} from '../customHooks/SearchHook';
 
 const InputHeader = (props: any) => {
-  const [searchInput, SetSearchInput] = useState<string>('');
   const debounceSearch = useMemo(() => debounce(props.searchFunction), []);
-  
+  const {setSearchInput, searchInput} = useSearchContext();
+
   return (
     <View style={styles.inputBox}>
       <TextInput
         style={styles.textInput}
         onChangeText={inputText => {
-          SetSearchInput(inputText);
+          setSearchInput(inputText);
           debounceSearch(inputText);
         }}
         onFocus={props.onFocus}

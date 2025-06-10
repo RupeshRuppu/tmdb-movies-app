@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Text,
   View,
   StyleSheet,
-  TouchableOpacity,
   Dimensions,
   ScrollView,
   StatusBar,
@@ -15,7 +13,6 @@ import {
   upcomingMovies,
   nowPlayingMovies,
   popularMovies,
-  searchMovies,
   baseImagePath,
 } from '../api/apicalls';
 import InputHeader from '../components/InputHeader';
@@ -64,7 +61,6 @@ const HomeScreen = ({navigation, route}: any) => {
       navigation.navigate('Search');
     }
   };
-
 
   useEffect(() => {
     (async () => {
